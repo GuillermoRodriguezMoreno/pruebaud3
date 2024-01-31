@@ -20,4 +20,9 @@ public class PeliculaService {
         return peliculaDAO.getAll();
     }
 
+    public void newPelicula(Pelicula pelicula){
+
+        peliculaDAO.create(pelicula);
+    }
+
 }
