@@ -7,7 +7,7 @@
 </head>
 <body>
 <div id="contenedora" style="float:none; margin: 0 auto;width: 900px;" >
-    <form th:action="@{/peliculas/crear}" th:object="${peliculaDto}" method="post">
+    <form th:action="@{/peliculas/crear}" th:object="${peliculaDTO}" method="post">
         <div class="clearfix">
             <div style="float: left; width: 50%">
                 <h1>Crear Pelicula</h1>
@@ -31,35 +31,74 @@
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
                 <input th:field="*{titulo}" />
+                <ul class="text-danger " th:if="${#fields.hasErrors('titulo')}">
+                    <li th:each="err : ${#fields.errors('titulo')}" th:text="${err}" />
+                </ul>
             </div>
             <div  style="float: left;width: 50%">
                 Descripcion
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
                 <input th:field="*{descripcion}" />
+                <ul class="text-danger " th:if="${#fields.hasErrors('descripcion')}">
+                    <li th:each="err : ${#fields.errors('descripcion')}" th:text="${err}" />
+                </ul>
             </div>
             <div  style="float: left;width: 50%">
                 Fecha lanzamiento
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
-                <input th:field="*{fecha_lanzamiento}" />
+                <input th:field="*{fecha_lanzamiento}" type="date"/>
             </div>
             <div  style="float: left;width: 50%">
                 Idioma
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
                 <select th:field="*{id_idioma}" class="form-select" aria-label="Default select example">
-                    <option >Open this select menu</option>
                     <option value="1">Ingles</option>
                     <option value="2">Italiano</option>
                 </select>
             </div>
-            <div th:text="#{msg.cliente.categoria}" style="float: left;width: 50%">
-                Categoria
+            <div  style="float: left;width: 50%">
+                duracion alquiler
             </div>
             <div style="float: none;width: auto;overflow: hidden;">
-                <input th:field="*{categoria}" />
+                <input th:field="*{duracion_alquiler}" />
             </div>
+            <div  style="float: left;width: 50%">
+                rental rate
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{rental_rate}" />
+                <ul class="text-danger " th:if="${#fields.hasErrors('rental_rate')}">
+                    <li th:each="err : ${#fields.errors('rental_rate')}" th:text="${err}" />
+                </ul>
+            </div>
+            <div  style="float: left;width: 50%">
+                duracion
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{duracion}" />
+                <ul class="text-danger " th:if="${#fields.hasErrors('duracion')}">
+                    <li th:each="err : ${#fields.errors('duracion')}" th:text="${err}" />
+                </ul>
+            </div>
+            <div  style="float: left;width: 50%">
+                replacement cost
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{replacement_cost}" />
+                <ul class="text-danger " th:if="${#fields.hasErrors('replacement_cost')}">
+                    <li th:each="err : ${#fields.errors('replacement_cost')}" th:text="${err}" />
+                </ul>
+            </div>
+            <div  style="float: left;width: 50%">
+                ultima actualizacion
+            </div>
+            <div style="float: none;width: auto;overflow: hidden;">
+                <input th:field="*{ultima_actualizacion}" type="date" />
+            </div>
+
         </div>
     </form>
 </div>

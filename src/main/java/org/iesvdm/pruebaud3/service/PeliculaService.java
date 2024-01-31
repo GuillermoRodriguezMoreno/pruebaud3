@@ -25,4 +25,16 @@ public class PeliculaService {
         peliculaDAO.create(pelicula);
     }
 
+    public long conteoPeliculas(){
+
+        long total = this.peliculaDAO.getAll().size();
+
+        return total;
+    }
+
+    public double costeHorror(){
+        // Cat = 11;
+        return 0.0;
+    }
+
 }

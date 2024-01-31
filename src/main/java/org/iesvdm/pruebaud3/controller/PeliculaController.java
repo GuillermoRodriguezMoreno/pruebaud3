@@ -1,5 +1,6 @@
 package org.iesvdm.pruebaud3.controller;
 
+import jakarta.validation.Valid;
 import org.iesvdm.pruebaud3.DTO.PeliculaDTO;
 import org.iesvdm.pruebaud3.dao.IdiomaDAO;
 import org.iesvdm.pruebaud3.model.Pelicula;
@@ -7,6 +8,7 @@ import org.iesvdm.pruebaud3.service.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,13 +38,19 @@ public class PeliculaController {
     public String crear(Model model){
 
         PeliculaDTO peliculaDTO = new PeliculaDTO();
-        model.addAttribute("peliculaDto", peliculaDTO);
+        model.addAttribute("peliculaDTO", peliculaDTO);
 
         return "crear-pelicula";
     }
 
     @PostMapping("/peliculas/crear")
-    public String submitCrear(@ModelAttribute("pelicula") PeliculaDTO peliculaDTO) {
+    public String submitCrear(@Valid @ModelAttribute("peliculaDTO") PeliculaDTO peliculaDTO, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()){
+
+            model.addAttribute("peliculaDTO", peliculaDTO);
+            return "crear-pelicula";
+        }
 
         Pelicula pelicula = new Pelicula(peliculaDTO.getId(),
                 peliculaDTO.getTitulo(),
@@ -58,6 +66,5 @@ public class PeliculaController {
         peliculaService.newPelicula(pelicula);
 
         return "redirect:/peliculas" ;
-
     }
 }

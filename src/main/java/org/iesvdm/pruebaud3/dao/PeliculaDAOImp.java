@@ -1,5 +1,6 @@
 package org.iesvdm.pruebaud3.dao;
 
+import org.iesvdm.pruebaud3.model.Categoria;
 import org.iesvdm.pruebaud3.model.Pelicula;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -43,13 +44,13 @@ public class PeliculaDAOImp implements PeliculaDAO{
             int idx = 1;
             ps.setString(idx++, pelicula.getTitulo());
             ps.setString(idx++, pelicula.getDescripcion());
-            ps.setDate(idx++, (Date) pelicula.getFecha_lanzamiento());
+            ps.setDate(idx++, new java.sql.Date(pelicula.getFecha_lanzamiento().getTime()));
             ps.setInt(idx++, pelicula.getIdioma().getId_idioma());
             ps.setInt(idx++, pelicula.getDuracion_alquiler());
             ps.setBigDecimal(idx++, pelicula.getRental_rate());
             ps.setInt(idx++, pelicula.getDuracion());
             ps.setBigDecimal(idx++, pelicula.getReplacement_cost());
-            ps.setDate(idx, (Date) pelicula.getUltima_actualizacion());
+            ps.setDate(idx, new java.sql.Date(pelicula.getUltima_actualizacion().getTime()));
             return ps;
         },keyHolder);
 
@@ -85,6 +86,7 @@ public class PeliculaDAOImp implements PeliculaDAO{
         return Optional.empty();
     }
 
+
     @Override
     public void update(Pelicula pelicula) {
 
@@ -98,5 +100,21 @@ public class PeliculaDAOImp implements PeliculaDAO{
     @Override
     public Pelicula newPelicula(ResultSet rs) throws SQLException {
         return null;
+    }
+
+    public List<Categoria> getAllpeliCat() {
+
+        String sqlString = """
+                SELECT * FROM pelicula_categoria;
+                """;
+
+        List<Categoria> catList = this.jdbcTemplate.query(sqlString,
+                (rs, rowNum) -> new Categoria(rs.getInt("id_pelicula"),
+                        rs.getInt("id_categoria"),
+                        rs.getDate("ultima_actualizacion")
+                        )
+        );
+
+        return catList;
     }
 }
