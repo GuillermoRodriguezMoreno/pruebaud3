@@ -25,7 +25,6 @@ public class PeliculaDTO {
     private String descripcion;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_lanzamiento;
-    @NotNull
     private Idioma idioma;
     @NotNull
     private int duracion_alquiler;
